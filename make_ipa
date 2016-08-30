@@ -27,6 +27,6 @@ done
 rm -rf build
 
 xcodebuild clean -workspace "$workspace" -scheme "$scheme" -configuration "$configuration"
-xcodebuild archive -workspace "$workspace" -scheme "$scheme" -archivePath "build/$scheme.xcarchive"
+xcodebuild archive -workspace "$workspace" -scheme "$scheme" -configuration "$configuration" -archivePath "build/$scheme.xcarchive"
 xcodebuild -exportArchive -archivePath "build/$scheme.xcarchive" -exportPath "build/$scheme.ipa" -exportFormat ipa -exportProvisioningProfile "$provisioning"
 zip -r build/$scheme-dSym.zip build/$scheme.xcarchive/dSyms
