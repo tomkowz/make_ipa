@@ -2,9 +2,9 @@
 # Creates IPA file with dSYMs. Builds the project, archives, signs and exports.
 # Author: Tomasz Szulc (http://szulctomasz.com | http://twitter.com/tomkowz)
 
-# make_ipa -w "name.xcworkspace" -s "scheme" -c "configuration" -p "provisioning_profile_name"
+# make_ipa -w "name.xcworkspace" -s "scheme" -c "configuration" -o "options"
 
-while getopts ":w:s:p:c:" opt; do
+while getopts ":w:s:c:o:" opt; do
 	case $opt in
 	  w) workspace=$OPTARG >&2;;
 	  
@@ -12,7 +12,7 @@ while getopts ":w:s:p:c:" opt; do
 
 	  c) configuration=$OPTARG >&2;;
 
-	  p) provisioning=$OPTARG >&2;;
+		o) options=$OPTARG >%2;;
 	  
 	  \?)
 	    echo "Invalid option: -$OPTARG" >&2
@@ -28,5 +28,5 @@ rm -rf build
 
 xcodebuild clean -workspace "$workspace" -scheme "$scheme" -configuration "$configuration"
 xcodebuild archive -workspace "$workspace" -scheme "$scheme" -configuration "$configuration" -archivePath "build/$scheme.xcarchive"
-xcodebuild -exportArchive -archivePath "build/$scheme.xcarchive" -exportPath "build/$scheme.ipa" -exportFormat ipa -exportProvisioningProfile "$provisioning"
+xcodebuild -exportArchive -archivePath "build/$scheme.xcarchive" -exportPath "build/$scheme.ipa" -exportOptionsPlist "$o"
 zip -r build/$scheme-dSym.zip build/$scheme.xcarchive/dSyms
