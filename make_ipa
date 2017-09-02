@@ -28,5 +28,5 @@ rm -rf build
 
 xcodebuild clean -workspace "$workspace" -scheme "$scheme" -configuration "$configuration"
 xcodebuild archive -workspace "$workspace" -scheme "$scheme" -configuration "$configuration" -archivePath "build/$scheme.xcarchive"
-xcodebuild -exportArchive -archivePath "build/$scheme.xcarchive" -exportPath "build/$scheme.ipa" -exportOptionsPlist "$o"
+xcodebuild -exportArchive -archivePath "build/$scheme.xcarchive" -exportPath "build/$scheme.ipa" -exportOptionsPlist "$options"
 zip -r build/$scheme-dSym.zip build/$scheme.xcarchive/dSyms
